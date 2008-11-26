@@ -7,11 +7,11 @@ SOURCES	= \
 	../Common/AllegroKeyboard.cpp	\
 	../Common/SuperMode7.cpp		\
 	../Common/ObjectSize.cpp		\
+	../Common/Camera.cpp			\
+	../Common/Track.cpp				\
 	main.cpp 						\
 	Game.cpp						\
-	Player.cpp						\
-	Camera.cpp						\
-	Track.cpp						\
+	Player.cpp
 
 OBJECTS		= $(SOURCES:.cpp=.o)
 EXECUTABLE	= newgame
