@@ -7,7 +7,7 @@ SOURCES	= \
 	../Common/AllegroKeyboard.cpp	\
 	../Common/SuperMode7.cpp		\
 	../Common/ObjectSize.cpp		\
-	../Common/Camera.cpp			\
+	Camera.cpp			\
 	../Common/Track.cpp				\
 	main.cpp 						\
 	Game.cpp						\
