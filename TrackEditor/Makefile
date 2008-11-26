@@ -7,7 +7,10 @@ SOURCES	= \
 	../Common/AllegroKeyboard.cpp	\
 	../Common/SuperMode7.cpp		\
 	../Common/ObjectSize.cpp		\
-	main.cpp
+	../Common/Track.cpp				\
+	../Common/Camera.cpp			\
+	main.cpp						\
+	TrackEditor.cpp
 
 OBJECTS		= $(SOURCES:.cpp=.o)
 EXECUTABLE	= TrackEditor

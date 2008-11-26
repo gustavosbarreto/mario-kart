@@ -1,6 +1,6 @@
 #include "AllegroSystem.h"
 #include "AllegroKeyboard.h"
-//#include "Game.h"
+#include "TrackEditor.h"
 
 #include <iostream>
 #include <allegro.h>
@@ -12,25 +12,25 @@ int main(int argc, const char *argv[])
 	allegro->initializeTimers();
 	allegro->installKeyboard();
 
-/*	Game game;
-	while (!game.quit()) {
+	TrackEditor editor;
+	while (!editor.quit()) {
 		while (AllegroSystem::SpeedCounter == 0)
 			rest(100 / 60);
 
 		while (AllegroSystem::SpeedCounter > 0) {
 			long oldSpeedCounter = AllegroSystem::SpeedCounter;
 
-			game.processInputEvents();
-			game.update();
+			editor.processInputEvents();
+			editor.update();
 
 			AllegroSystem::SpeedCounter--;
 			if (oldSpeedCounter <= AllegroSystem::SpeedCounter)
 				break;
 		}
 
-		game.render();
+		editor.render();
 	}
-*/
+
 	return 0;
 }
 END_OF_MAIN();
