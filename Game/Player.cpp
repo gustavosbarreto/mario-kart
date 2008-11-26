@@ -20,23 +20,23 @@ Player::Player()
 void Player::processInputEvents()
 {
 	if (key[KEY_UP])
-		mAcc += 0.5;
+		mAcc += 0.4;
 	else
 		mAcc -= 0.1;
 
 	if (key[KEY_DOWN])
 		mAcc -= 0.3;
 	else if (key[KEY_LEFT])
-		mAngle -= 0.1;
+		mAngle -= 0.02;
 
 	if (key[KEY_RIGHT])
-		mAngle += 0.1;
+		mAngle += 0.02;
 }
 
 void Player::update()
 {
-	if (mAcc > 0.9)
-		mAcc = 0.9;
+	if (mAcc > 2.0)
+		mAcc = 2.0;
 	if (mAcc < 0)
 		mAcc = 0;
 

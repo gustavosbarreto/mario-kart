@@ -36,7 +36,7 @@ void Game::processInputEvents()
 	if (key[KEY_ESC])
 		mQuit = true;
 
-//	mPlayer->processInputEvents();
+	mPlayer->processInputEvents();
 
 /*   if (key[KEY_UP]) {
        mCamera->setY(mCamera->y()+sin(mCamera->angle())*2);
@@ -56,8 +56,8 @@ void Game::processInputEvents()
 
 void Game::update()
 {
-//	mPlayer->update();
-//	mCamera->update(mPlayer);
+	mPlayer->update();
+	mCamera->update(mPlayer);
 }
 
 void Game::render()
