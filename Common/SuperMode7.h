@@ -6,8 +6,6 @@
  * dar impressão de um pseudo 3D apartir de um BITMAP 2D.
  */
 
-#include "ObjectPoint.h"
-
 #include <allegro.h>
 
 namespace SuperMode7

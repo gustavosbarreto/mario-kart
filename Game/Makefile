@@ -2,17 +2,16 @@ CC		= g++
 CFLAGS	= -c#-c -Wall -pipe -g -W -O2
 LDFLAGS	= $(shell allegro-config --frameworks)
 SOURCES	= \
-	AllegroSystem.cpp		\
-	AllegroScreen.cpp		\
-	AllegroKeyboard.cpp		\
-	main.cpp 				\
-	Game.cpp				\
-	Player.cpp				\
-	Camera.cpp				\
-	Track.cpp				\
-	SuperMode7.cpp			\
-	ObjectSize.cpp			\
-	ObjectPoint.cpp
+	../Common/AllegroSystem.cpp		\
+	../Common/AllegroScreen.cpp		\
+	../Common/AllegroKeyboard.cpp	\
+	../Common/SuperMode7.cpp		\
+	../Common/ObjectSize.cpp		\
+	main.cpp 						\
+	Game.cpp						\
+	Player.cpp						\
+	Camera.cpp						\
+	Track.cpp						\
 
 OBJECTS		= $(SOURCES:.cpp=.o)
 EXECUTABLE	= newgame
@@ -23,7 +22,10 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 .cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@ -I../Common/
 
 clean:
 	rm *.o
+
+distclean: clean
+	rm -f newgame

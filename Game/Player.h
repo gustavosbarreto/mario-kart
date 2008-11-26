@@ -1,8 +1,6 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
-#include "ObjectPoint.h"
-
 #include <Allegro/allegro.h>
 #include <string>
 
