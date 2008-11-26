@@ -1,31 +1,36 @@
+#include "AllegroSystem.h"
+#include "AllegroKeyboard.h"
+//#include "Game.h"
+
 #include <iostream>
-#include <fstream>
-#include <sstream>
+#include <allegro.h>
 
-///a.out 1 60293120 40304640 12582912
-
-using namespace std;
-
-struct TrackInfo
+int main(int argc, const char *argv[])
 {
-	double cameraX;
-	double cameraY;
-	double angle;
-};
+	AllegroSystem *allegro = AllegroSystem::Instance();
+	allegro->setupScreen(ObjectSize(640, 480));
+	allegro->initializeTimers();
+	allegro->installKeyboard();
 
-int main(int argc, char *argv[])
-{
-	stringstream fileName;
-	fileName << "Track" << argv[1] << ".dat";
+/*	Game game;
+	while (!game.quit()) {
+		while (AllegroSystem::SpeedCounter == 0)
+			rest(100 / 60);
 
-	TrackInfo info;
-	info.cameraX = atof(argv[2]);
-	info.cameraY = atof(argv[3]);
-	info.angle = atof(argv[4]);
+		while (AllegroSystem::SpeedCounter > 0) {
+			long oldSpeedCounter = AllegroSystem::SpeedCounter;
 
-	ofstream out(fileName.str().c_str(), ios::binary);
-	out.write((char *)&info, sizeof(info));
-	out.close();
+			game.processInputEvents();
+			game.update();
 
+			AllegroSystem::SpeedCounter--;
+			if (oldSpeedCounter <= AllegroSystem::SpeedCounter)
+				break;
+		}
+
+		game.render();
+	}
+*/
 	return 0;
 }
+END_OF_MAIN();
