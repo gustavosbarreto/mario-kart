@@ -11,11 +11,11 @@ int main(int argc, const char *argv[])
 	allegro->setupScreen(ObjectSize(640, 480));
 	allegro->initializeTimers();
 	allegro->installKeyboard();
-
+	int OldTime = 0;
 	Game game;
 	while (!game.quit()) {
 		while (AllegroSystem::SpeedCounter == 0)
-			rest(100 / 60);
+			rest(100 / 30);
 
 		while (AllegroSystem::SpeedCounter > 0) {
 			long oldSpeedCounter = AllegroSystem::SpeedCounter;
@@ -26,6 +26,13 @@ int main(int argc, const char *argv[])
 			AllegroSystem::SpeedCounter--;
 			if (oldSpeedCounter <= AllegroSystem::SpeedCounter)
 				break;
+		}
+
+		AllegroSystem::Fps++;
+		if (AllegroSystem::TimeTicks - OldTime >= 30) {
+			AllegroSystem::LastFps = AllegroSystem::Fps;
+			AllegroSystem::Fps = 0;
+			OldTime = AllegroSystem::TimeTicks;
 		}
 
 		game.render();

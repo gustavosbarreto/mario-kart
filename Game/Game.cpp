@@ -77,6 +77,7 @@ void Game::render()
 	textprintf_ex(buffer, font, 10, 10, makecol(0, 0, 255), -1, "Camera X     = %f", mCamera->x());
 	textprintf_ex(buffer, font, 10, 20, makecol(0, 0, 255), -1, "Camera Y     = %f", mCamera->y());
 	textprintf_ex(buffer, font, 10, 30, makecol(0, 0, 255), -1, "Camera Angle = %f", mCamera->angle());
+	textprintf_ex(buffer, font, 10, 40, makecol(0, 0, 255), -1, "FPS          = %i", AllegroSystem::LastFps);
 
 	// Renderiza o jogador
 	SuperMode7::DrawObject(buffer,

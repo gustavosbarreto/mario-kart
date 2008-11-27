@@ -21,7 +21,11 @@ private:
 
 public:
 	static volatile long SpeedCounter;
-	
+	static volatile long TimeTicks;
+	static volatile int Fps;
+	static volatile int AvgFps;
+	static volatile int LastFps;
+
 public:
 	~AllegroSystem();
 
@@ -38,6 +42,7 @@ public:
 	inline AllegroScreen *screen() const { return mScreen; }
 
 	static void IncrementSpeedCounter();
+	static void TimeTicker();
 };
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
-#include <Allegro/allegro.h>
+#include <allegro.h>
 #include <string>
 
 class Player

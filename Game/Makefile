@@ -7,6 +7,7 @@ SOURCES	= \
 	../Common/AllegroKeyboard.cpp	\
 	../Common/SuperMode7.cpp		\
 	../Common/ObjectSize.cpp		\
+	../Common/Vector.cpp			\
 	Camera.cpp			\
 	../Common/Track.cpp				\
 	main.cpp 						\

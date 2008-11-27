@@ -8,6 +8,10 @@
 
 AllegroSystem *AllegroSystem::mInstance = 0;
 volatile long AllegroSystem::SpeedCounter = 0;
+volatile long AllegroSystem::TimeTicks = 0;
+volatile int AllegroSystem::Fps = 0;
+volatile int AllegroSystem::AvgFps = 0;
+volatile int AllegroSystem::LastFps = 0;
 
 AllegroSystem::AllegroSystem()
 {
@@ -51,7 +55,11 @@ void AllegroSystem::initializeTimers()
 
 	LOCK_VARIABLE(AllegroSystem::SpeedCounter);
 	LOCK_FUNCTION(AllegroSystem::IncrementSpeedCounter);
-	install_int_ex(AllegroSystem::IncrementSpeedCounter, BPS_TO_TIMER(60));
+	install_int_ex(AllegroSystem::IncrementSpeedCounter, BPS_TO_TIMER(30));
+
+	LOCK_VARIABLE(AllegroSystem::TimeTicks);
+	LOCK_FUNCTION(AllegroSystem::TimeTicker);
+	install_int_ex(AllegroSystem::TimeTicker, BPS_TO_TIMER(30));
 }
 
 void AllegroSystem::pollEvents()
@@ -67,5 +75,14 @@ void AllegroSystem::waitForTicks()
 void AllegroSystem::IncrementSpeedCounter()
 {
 	AllegroSystem::SpeedCounter++;
+//	LastFps = Fps;
+//	Fps = 0;
+//	AvgFps = (AvgFps * LastFps) / 2;
 }
 END_OF_FUNCTION(AllegroSystem::IncrementSpeedCounter);
+
+void AllegroSystem::TimeTicker()
+{
+	AllegroSystem::TimeTicks++;
+}
+END_OF_FUNCTION(AllegroSystem::TimeTicker);
