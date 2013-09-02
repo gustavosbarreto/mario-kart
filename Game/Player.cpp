@@ -40,9 +40,10 @@ void Player::update()
 	if (mAcc < 0)
 		mAcc = 0;
 
-	Vector finalVector;
-
-	printf("%f %f\n", mAngle);
 	mPositionX += mAcc * cos(mAngle);
 	mPositionY += mAcc * sin(mAngle);
+}
+
+void Player::updateBmp(float angle)
+{
 }

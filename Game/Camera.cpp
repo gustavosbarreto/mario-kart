@@ -22,7 +22,7 @@ void Camera::update(Player *player)
 //	mAngle = player->angle();
 
 //	xy.x = fadd(fadd(car->xy.x, fmul(customInOut, fcos(angle))), fmul(customLeftRight, fcos(angle+itofix(64))));
-	
+
 	mAngle = player->angle();
 	mPositionX = (player->x()  + (-35 * cos(mAngle))) + cos(mAngle + 64);
 	mPositionY = (player->y()  + (-35 * sin(mAngle))) + sin(mAngle + 64);

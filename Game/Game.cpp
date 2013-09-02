@@ -58,6 +58,7 @@ void Game::update()
 {
 	mPlayer->update();
 	mCamera->update(mPlayer);
+	mPlayer->updateBmp(mCamera->angle());
 }
 
 void Game::render()

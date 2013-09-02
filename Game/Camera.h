@@ -21,8 +21,6 @@ private:
 public:
 	Camera();
 
-	void merda();
-
 	void update(Player *player);
 
 	inline float x() const { return mPositionX; }

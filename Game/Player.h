@@ -22,6 +22,7 @@ public:
 
 	void processInputEvents();
 	void update();
+	void updateBmp(float angle);
 
 	inline float x() const { return mPositionX; }
 	inline void setX(float x) { mPositionX = x; }
