@@ -1,6 +1,6 @@
 CC		= g++
-CFLAGS	= -c#-c -Wall -pipe -g -W -O2
-LDFLAGS	= $(shell allegro-config --frameworks)
+CFLAGS	= -c -Wall -pipe -g -W -O2
+LDFLAGS	= $(shell allegro-config --libs)
 SOURCES	= \
 	../Common/AllegroSystem.cpp		\
 	../Common/AllegroScreen.cpp		\
@@ -20,10 +20,10 @@ EXECUTABLE	= newgame
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
 
 .cpp.o:
-	$(CC) $(CFLAGS) $< -o $@ -I../Common/
+	$(CC) $(CFLAGS) -c $< -o $@ -I../Common/
 
 clean:
 	rm *.o
