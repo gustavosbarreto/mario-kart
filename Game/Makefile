@@ -12,6 +12,7 @@ SOURCES	= \
 	../Common/Track.cpp				\
 	main.cpp 						\
 	Game.cpp						\
+	Opponent.cpp						\
 	Player.cpp
 
 OBJECTS		= $(SOURCES:.cpp=.o)

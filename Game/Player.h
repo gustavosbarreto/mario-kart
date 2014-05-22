@@ -9,12 +9,14 @@ class Player
 private:
 	std::string mName;
 
+	BITMAP *mSprite;
 	BITMAP *mBitmap;
 
 	float mPositionX;
 	float mPositionY;
 	float mAcc;
 	float mAngle;
+	float mAngleAcc;
 	float mVectorLength;
 
 public:
@@ -22,7 +24,7 @@ public:
 
 	void processInputEvents();
 	void update();
-	void updateBmp(float angle);
+	void updateBmp(int step);
 
 	inline float x() const { return mPositionX; }
 	inline void setX(float x) { mPositionX = x; }

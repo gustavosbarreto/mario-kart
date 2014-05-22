@@ -5,6 +5,7 @@
 #include "SuperMode7.h"
 #include "AllegroSystem.h"
 #include "AllegroScreen.h"
+#include "Opponent.h"
 
 #include <iostream>
 #include <sstream>
@@ -22,6 +23,15 @@ Game::Game():
 	mPlayer = new Player();
 
 	TrackInfo info = mCurrentTrack->info();
+
+	mOpponents[0] = new Opponent(Opponent::Luigi);
+	mOpponents[0]->setX(913);
+	mOpponents[0]->setY(604);
+
+	mOpponents[1] = new Opponent(Opponent::Peach);
+	mOpponents[1]->setX(943);
+	mOpponents[1]->setY(627);
+
 
 //	mCamera->setX(info.startCameraX);
 //	mCamera->setY(info.startCameraY);
@@ -59,6 +69,9 @@ void Game::update()
 	mPlayer->update();
 	mCamera->update(mPlayer);
 	mPlayer->updateBmp(mCamera->angle());
+
+	for (int i = 0; i < (sizeof(mOpponents) / sizeof(*mOpponents)); i++)
+		mOpponents[i]->update();
 }
 
 void Game::render()
@@ -77,8 +90,11 @@ void Game::render()
 	// Debug
 	textprintf_ex(buffer, font, 10, 10, makecol(0, 0, 255), -1, "Camera X     = %f", mCamera->x());
 	textprintf_ex(buffer, font, 10, 20, makecol(0, 0, 255), -1, "Camera Y     = %f", mCamera->y());
-	textprintf_ex(buffer, font, 10, 30, makecol(0, 0, 255), -1, "Camera Angle = %f", mCamera->angle());
-	textprintf_ex(buffer, font, 10, 40, makecol(0, 0, 255), -1, "FPS          = %i", AllegroSystem::LastFps);
+	textprintf_ex(buffer, font, 10, 30, makecol(0, 0, 255), -1, "Player X     = %f", mPlayer->x());
+	textprintf_ex(buffer, font, 10, 40, makecol(0, 0, 255), -1, "Player Y     = %f", mPlayer->y());
+	textprintf_ex(buffer, font, 10, 50, makecol(0, 0, 255), -1, "Camera Angle = %f", mCamera->angle());
+textprintf_ex(buffer, font, 10, 60, makecol(0, 0, 255), -1, "Player Angle = %f", mPlayer->angle());
+	textprintf_ex(buffer, font, 10, 70, makecol(0, 0, 255), -1, "FPS          = %i", AllegroSystem::LastFps);
 
 	// Renderiza o jogador
 	SuperMode7::DrawObject(buffer,
@@ -89,6 +105,19 @@ void Game::render()
 		mCamera->x(),
 		mCamera->y(),
 		mCamera->mode7Params());
+
+	for (int i = 0; i < (sizeof(mOpponents) / sizeof(*mOpponents)); i++) {
+		Opponent *opponent = mOpponents[i];
+
+		SuperMode7::DrawObject(buffer,
+			opponent->bitmap(),
+			mCamera->angle(),
+			(mPlayer->x()+opponent->x())-mCamera->x(),
+			(mPlayer->y()+opponent->y())-mCamera->y(),
+			opponent->x()-(opponent->x()-mPlayer->x()),
+			opponent->y()-(opponent->y()-mPlayer->y()),
+			mCamera->mode7Params());
+	}
 
 	// Joga tudo na tela
 	blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);

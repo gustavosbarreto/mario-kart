@@ -26,5 +26,4 @@ void Camera::update(Player *player)
 	mAngle = player->angle();
 	mPositionX = (player->x()  + (-35 * cos(mAngle))) + cos(mAngle + 64);
 	mPositionY = (player->y()  + (-35 * sin(mAngle))) + sin(mAngle + 64);
-
 }

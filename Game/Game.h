@@ -4,6 +4,7 @@
 class Track;
 class Camera;
 class Player;
+class Opponent;
 
 class Game
 {
@@ -13,6 +14,8 @@ private:
 	Track *mCurrentTrack;
 	Camera *mCamera;
 	Player *mPlayer;
+
+	Opponent *mOpponents[2];
 
 public:
 	Game();
