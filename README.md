@@ -3,6 +3,8 @@ Mario Kart Clone
 
 ![Mario Kart Clone](https://github.com/gustavosbarreto/mario-kart/raw/master/screenshot.png "Mario Kart Clone")
 
+Click to play
+
 In late 2008 I created this Mario Kart Clone using C++ and Allegro Library
 when I was student of Computer Science at Catholic University of Pelotas (UCPEL)
 
