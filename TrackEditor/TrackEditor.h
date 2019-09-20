@@ -4,24 +4,23 @@
 class Track;
 class Camera;
 
-class TrackEditor
-{
+class TrackEditor {
 private:
-	bool mQuit;
+  bool mQuit;
 
-	Track *mCurrentTrack;
-	Camera *mCamera;
+  Track *mCurrentTrack;
+  Camera *mCamera;
 
 public:
-	TrackEditor();
-	~TrackEditor();
+  TrackEditor();
+  ~TrackEditor();
 
-	void processInputEvents();
-	void update();
-	void render();
+  void processInputEvents();
+  void update();
+  void render();
 
-	inline bool quit() const { return mQuit; }
-	inline void setQuit(bool quit) { mQuit = quit; }
+  inline bool quit() const { return mQuit; }
+  inline void setQuit(bool quit) { mQuit = quit; }
 };
 
 #endif

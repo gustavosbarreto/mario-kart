@@ -1,7 +1,4 @@
 #include "ObjectSize.h"
 
-ObjectSize::ObjectSize(int width, int height):
-	mWidth(width),
-	mHeight(height)
-{
-}
+ObjectSize::ObjectSize(int width, int height)
+    : mWidth(width), mHeight(height) {}

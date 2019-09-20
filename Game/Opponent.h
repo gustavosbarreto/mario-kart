@@ -5,41 +5,34 @@
 
 #include <allegro.h>
 
-class Opponent
-{
+class Opponent {
 public:
-	enum Character
-	{
-		Mario,
-		Luigi,
-		Peach
-	};
+  enum Character { Mario, Luigi, Peach };
 
 private:
-	BITMAP *mSprite;
-	BITMAP *mBitmap;
+  BITMAP *mSprite;
+  BITMAP *mBitmap;
 
-	float mPositionX;
-	float mPositionY;
+  float mPositionX;
+  float mPositionY;
 
-	Character mCharacter;
+  Character mCharacter;
 
 public:
-	Opponent(Character character);
+  Opponent(Character character);
 
-	void update();
+  void update();
 
-	inline float x() const { return mPositionX; }
-	inline void setX(float positionX) { mPositionX = positionX; }
-	inline float y() const { return mPositionY; }
-	inline void setY(float positionY) { mPositionY = positionY; }
+  inline float x() const { return mPositionX; }
+  inline void setX(float positionX) { mPositionX = positionX; }
+  inline float y() const { return mPositionY; }
+  inline void setY(float positionY) { mPositionY = positionY; }
 
-	inline BITMAP *bitmap() const { return mBitmap; }
+  inline BITMAP *bitmap() const { return mBitmap; }
 
-    void loadBitmap(const std::string &fileName);
+  void loadBitmap(const std::string &fileName);
 
-	void updateBmp(int step);
+  void updateBmp(int step);
 };
 
 #endif
-
