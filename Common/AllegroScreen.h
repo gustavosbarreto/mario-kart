@@ -8,20 +8,18 @@
 
 class AllegroSystem;
 
-class AllegroScreen
-{
+class AllegroScreen {
 private:
-	friend class AllegroSystem;
+  friend class AllegroSystem;
 
-	BITMAP *mBitmap;
+  BITMAP *mBitmap;
 
 private:
-	AllegroScreen(const ObjectSize &size,
-		bool fullScreen = false,
-		ColorDepth colorDepth = DepthAuto);
+  AllegroScreen(const ObjectSize &size, bool fullScreen = false,
+                ColorDepth colorDepth = DepthAuto);
 
 public:
-	inline BITMAP *bitmap() const { return mBitmap; }
+  inline BITMAP *bitmap() const { return mBitmap; }
 };
 
 #endif

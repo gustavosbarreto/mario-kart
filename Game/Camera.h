@@ -7,32 +7,31 @@
 class Game;
 class Player;
 
-class Camera
-{
+class Camera {
 private:
-	friend class Game;
+  friend class Game;
 
-	float mAngle;
-	float mPositionX;
-	float mPositionY;
+  float mAngle;
+  float mPositionX;
+  float mPositionY;
 
-	SuperMode7::Params mMode7Params;
+  SuperMode7::Params mMode7Params;
 
 public:
-	Camera();
+  Camera();
 
-	void update(Player *player);
+  void update(Player *player);
 
-	inline float x() const { return mPositionX; }
-	inline void setX(float x) { mPositionX = x; }
+  inline float x() const { return mPositionX; }
+  inline void setX(float x) { mPositionX = x; }
 
-	inline float y() const { return mPositionY; }
-	inline void setY(float y) { mPositionY = y; }
+  inline float y() const { return mPositionY; }
+  inline void setY(float y) { mPositionY = y; }
 
-	inline float angle() const { return mAngle; }
-	inline void setAngle(float angle) { mAngle = angle; }
+  inline float angle() const { return mAngle; }
+  inline void setAngle(float angle) { mAngle = angle; }
 
-	inline SuperMode7::Params mode7Params() const { return mMode7Params; }
+  inline SuperMode7::Params mode7Params() const { return mMode7Params; }
 };
 
 #endif
