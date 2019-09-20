@@ -1,6 +1,6 @@
 CC		= g++
-CFLAGS	= -c#-c -Wall -pipe -g -W -O2
-LDFLAGS	= $(shell allegro-config --frameworks)
+CFLAGS	= -Wall -pipe -g -W -O2
+LDFLAGS	= $(shell allegro-config --libs)
 SOURCES	= \
 	../Common/AllegroSystem.cpp		\
 	../Common/AllegroScreen.cpp		\
@@ -8,23 +8,15 @@ SOURCES	= \
 	../Common/SuperMode7.cpp		\
 	../Common/ObjectSize.cpp		\
 	../Common/Track.cpp				\
-	../Common/Camera.cpp			\
+	../Game/Camera.cpp			    \
 	main.cpp						\
-	TrackEditor.cpp
+	TrackEditor.h
 
-OBJECTS		= $(SOURCES:.cpp=.o)
-EXECUTABLE	= TrackEditor
+EXECUTABLE	= trackeditor
 
-all: $(SOURCES) $(EXECUTABLE)
-
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
-
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@ -I../Common/
+all: 
+	$(CC) TrackEditor.cpp -o $(EXECUTABLE) $(CFLAGS) -I../Common/ -I../Game $(SOURCES) $(LDFLAGS)
 
 clean:
-	rm *.o
-
-distclean: clean
-	rm -f TrackEditor
+	rm -f *.o
+	rm -f $(EXECUTABLE)

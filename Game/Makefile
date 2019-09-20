@@ -16,7 +16,7 @@ SOURCES	= \
 	Player.cpp
 
 OBJECTS		= $(SOURCES:.cpp=.o)
-EXECUTABLE	= newgame
+EXECUTABLE	= game
 
 all: $(SOURCES) $(EXECUTABLE)
 
@@ -27,7 +27,5 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) -c $< -o $@ -I../Common/
 
 clean:
-	rm *.o
-
-distclean: clean
-	rm -f newgame
+	rm -f *.o
+	rm -f $(EXECUTABLE)
