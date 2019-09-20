@@ -3,25 +3,23 @@
 
 #include <allegro.h>
 
-struct TrackInfo
-{
-	double startCameraX;
-	double startCameraY;
-	double startAngle;
+struct TrackInfo {
+  double startCameraX;
+  double startCameraY;
+  double startAngle;
 };
 
-class Track
-{
+class Track {
 private:
-	int mNumber;
-	BITMAP *mBitmap;
+  int mNumber;
+  BITMAP *mBitmap;
 
 public:
-	Track(int number);
+  Track(int number);
 
-	const TrackInfo info();
+  const TrackInfo info();
 
-	inline BITMAP *bitmap() const { return mBitmap; }
+  inline BITMAP *bitmap() const { return mBitmap; }
 };
 
 #endif

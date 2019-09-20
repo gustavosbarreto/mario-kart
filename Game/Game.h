@@ -6,27 +6,26 @@ class Camera;
 class Player;
 class Opponent;
 
-class Game
-{
+class Game {
 private:
-	bool mQuit;
+  bool mQuit;
 
-	Track *mCurrentTrack;
-	Camera *mCamera;
-	Player *mPlayer;
+  Track *mCurrentTrack;
+  Camera *mCamera;
+  Player *mPlayer;
 
-	Opponent *mOpponents[2];
+  Opponent *mOpponents[2];
 
 public:
-	Game();
-	~Game();
+  Game();
+  ~Game();
 
-	void processInputEvents();
-	void update();
-	void render();
+  void processInputEvents();
+  void update();
+  void render();
 
-	inline bool quit() const { return mQuit; }
-	inline void setQuit(bool quit) { mQuit = quit; }
+  inline bool quit() const { return mQuit; }
+  inline void setQuit(bool quit) { mQuit = quit; }
 };
 
 #endif

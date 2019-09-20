@@ -3,17 +3,16 @@
 
 class AllegroSystem;
 
-class AllegroKeyboard
-{
+class AllegroKeyboard {
 private:
-	friend class AllegroSystem;
+  friend class AllegroSystem;
 
-	AllegroKeyboard();
+  AllegroKeyboard();
 
-	void update();
+  void update();
 
 public:
-	bool isKeyDown(int keyValue) const;
+  bool isKeyDown(int keyValue) const;
 };
 
 #endif
