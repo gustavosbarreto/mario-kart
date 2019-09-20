@@ -2,7 +2,7 @@ run-game:
 	cd Game && make && ./game
 
 run-editor:
-	cd TrackEditor && make && ./trackeditor
+	cd TrackEditor && make && ./editor
 
 clean:
 	cd Game && make clean

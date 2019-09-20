@@ -12,7 +12,7 @@ SOURCES	= \
 	main.cpp						\
 	TrackEditor.h
 
-EXECUTABLE	= trackeditor
+EXECUTABLE	= editor
 
 all: 
 	$(CC) TrackEditor.cpp -o $(EXECUTABLE) $(CFLAGS) -I../Common/ -I../Game $(SOURCES) $(LDFLAGS)
