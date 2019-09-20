@@ -15,8 +15,6 @@ using namespace std;
 TrackEditor::TrackEditor() : mQuit(false) {
   mCurrentTrack = new Track(1);
   mCamera = new Camera();
-
-  TrackInfo info = mCurrentTrack->info();
 }
 
 TrackEditor::~TrackEditor() {}

@@ -16,12 +16,12 @@ Game features
 
 # Dep
 
-* allegro5
+* allegro4
 * make
 * gcc
 
 ```
-sudo apt-get install liballegro5-dev
+sudo apt-get install liballegro4-dev
 ```
 
 # Run

@@ -20,8 +20,6 @@ Game::Game() : mQuit(false) {
   mCamera = new Camera();
   mPlayer = new Player();
 
-  TrackInfo info = mCurrentTrack->info();
-
   mOpponents[0] = new Opponent(Opponent::Luigi);
   mOpponents[0]->setX(913);
   mOpponents[0]->setY(604);
@@ -60,7 +58,7 @@ void Game::update() {
   mCamera->update(mPlayer);
   mPlayer->updateBmp(mCamera->angle());
 
-  for (int i = 0; i < (sizeof(mOpponents) / sizeof(*mOpponents)); i++)
+  for (int i = 0; i < (long)(sizeof(mOpponents) / sizeof(*mOpponents)); i++)
     mOpponents[i]->update();
 }
 
@@ -93,7 +91,7 @@ void Game::render() {
                          mPlayer->x(), mPlayer->y(), mCamera->x(), mCamera->y(),
                          mCamera->mode7Params());
 
-  for (int i = 0; i < (sizeof(mOpponents) / sizeof(*mOpponents)); i++) {
+  for (int i = 0; i < (long)(sizeof(mOpponents) / sizeof(*mOpponents)); i++) {
     Opponent *opponent = mOpponents[i];
 
     SuperMode7::DrawObject(buffer, opponent->bitmap(), mCamera->angle(),
