@@ -14,6 +14,10 @@ Opponent::Opponent(Character character) : mCharacter(character) {
     break;
   case Peach:
     mSprite = load_bitmap("Data/Peach.bmp", NULL);
+    break;
+  case Mario:
+    mSprite = load_bitmap("Data/Mario.bmp", NULL);
+    break;
   }
 
   floodfill(mBitmap, 0, 0, makecol(0, 0, 0));
@@ -27,7 +31,7 @@ void Opponent::update() {
 }
 
 void Opponent::loadBitmap(const std::string &fileName) {
-  // mBitmap = load_bitmap(fileName.c_str(), NULL);
+  mBitmap = load_bitmap(fileName.c_str(), NULL);
 }
 
 void Opponent::updateBmp(int step) {

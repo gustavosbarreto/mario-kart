@@ -28,8 +28,6 @@ Vector Vector::operator-=(const Vector &v) {
 
 Vector Vector::operator*(double e) { return Vector(mX * e, mY * e); }
 
-Vector Vector::operator/(double e) { return Vector(mX / 2, mY / 2); }
-
 Vector operator*(double e, const Vector &v) {
   return Vector(v.mX * e, v.mY * e);
 }

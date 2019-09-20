@@ -1,6 +1,6 @@
 CC		= g++
-CFLAGS	= -Wall -pipe -g -W -O2
-LDFLAGS	= $(shell allegro-config --libs)
+CFLAGS	= -Wall -pipe -g -W -O2 
+LDFLAGS	= $(shell pkg-config --libs allegro)
 SOURCES	= \
 	../Common/AllegroSystem.cpp		\
 	../Common/AllegroScreen.cpp		\
