@@ -10,7 +10,7 @@ clean:
 	cd Common && make clean
 
 install-formatter:
-	sudo apt-get install clang-format
+	sudo apt install clang-format
 
 format:
 	find . -regex '.*\.\(cpp\|hpp\|cu\|c\|h\)' -exec clang-format -style=file -i {} \;
