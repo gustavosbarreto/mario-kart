@@ -25,7 +25,7 @@ Opponent::Opponent(Character character) : mCharacter(character) {
 }
 
 void Opponent::update() {
-  // std::cout << "ae" << std::endl;
+  // std::cout << "update" << std::endl;
   // mPositionY -= 0.4;
   // mPositionX -= 0.2;
 }

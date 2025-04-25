@@ -1,7 +1,6 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
 
-//#include "ObjectPofloat.h"
 #include "SuperMode7.h"
 
 class Game;
