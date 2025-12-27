@@ -1,9 +1,10 @@
 *.o
 *.dSYM
 
-Game/game
-TrackEditor/editor
+src/game/game
+src/editor/editor
 build
+dist
 
 .vscode
 .idea
