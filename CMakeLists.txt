@@ -60,6 +60,30 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/data
     PATTERN ".DS_Store" EXCLUDE
 )
 
+# Install runtime dependencies (DLLs on Windows)
+if(WIN32)
+    install(CODE [[
+        file(GET_RUNTIME_DEPENDENCIES
+            EXECUTABLES
+                "${CMAKE_INSTALL_PREFIX}/game.exe"
+                "${CMAKE_INSTALL_PREFIX}/editor.exe"
+            RESOLVED_DEPENDENCIES_VAR _r_deps
+            UNRESOLVED_DEPENDENCIES_VAR _u_deps
+            DIRECTORIES
+                "${CMAKE_BINARY_DIR}"
+                "${CMAKE_PREFIX_PATH}/bin"
+        )
+        foreach(_file ${_r_deps})
+            file(INSTALL
+                DESTINATION "${CMAKE_INSTALL_PREFIX}"
+                TYPE SHARED_LIBRARY
+                FOLLOW_SYMLINK_CHAIN
+                FILES "${_file}"
+            )
+        endforeach()
+    ]])
+endif()
+
 # Print summary
 message(STATUS "SDL2 include: ${SDL2_INCLUDE_DIRS}")
 message(STATUS "SDL2_ttf include: ${SDL2_TTF_INCLUDE_DIRS}")
