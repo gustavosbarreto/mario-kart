@@ -25,13 +25,13 @@ add_subdirectory(TrackEditor)
 add_custom_target(run-game
     COMMAND $<TARGET_FILE:game>
     DEPENDS game
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Game
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 add_custom_target(run-editor
     COMMAND $<TARGET_FILE:editor>
     DEPENDS editor
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/TrackEditor
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Print summary
