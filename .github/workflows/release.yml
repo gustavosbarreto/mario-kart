@@ -34,13 +34,24 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-          choco install -y pkgconfiglite
-          choco install -y sdl2 sdl2-ttf sdl2-image
+          # Install vcpkg
+          git clone https://github.com/Microsoft/vcpkg.git $env:TEMP\vcpkg
+          & "$env:TEMP\vcpkg\bootstrap-vcpkg.bat"
+          
+          # Install SDL2 dependencies via vcpkg
+          & "$env:TEMP\vcpkg\vcpkg" install sdl2:x64-windows sdl2-ttf:x64-windows sdl2-image:x64-windows
 
       - name: Configure
+        if: runner.os != 'Windows'
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $vcpkgPath = "$env:TEMP\vcpkg"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$vcpkgPath\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows
 
       - name: Build
         run: |
