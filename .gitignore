@@ -1,7 +1,10 @@
 *.o
+*.dSYM
 
 Game/game
 TrackEditor/editor
+build
 
 .vscode
 .idea
+.DS_Store
