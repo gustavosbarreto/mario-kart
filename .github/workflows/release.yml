@@ -46,22 +46,25 @@ jobs:
         run: |
           cmake --build build --config Release --parallel
 
+      - name: Install (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: |
+          cmake --install build --prefix dist
+
+      - name: Install (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          cmake --install build --prefix dist --config Release
+
       - name: Package (Linux/macOS)
         if: runner.os != 'Windows'
         run: |
-          mkdir -p dist
-          cp build/src/game/game build/src/editor/editor dist/
-          cp -a data dist/
           tar czf mario-kart-${{ github.ref_name }}-${{ runner.os }}-x64.tar.gz -C dist .
 
       - name: Package (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Force -Path dist | Out-Null
-          Copy-Item build\Release\game.exe dist\
-          Copy-Item build\Release\editor.exe dist\
-          Copy-Item Data dist\Data -Recurse
           Compress-Archive -Path dist\* -DestinationPath mario-kart-${{ github.ref_name }}-windows-x64.zip
 
       - name: Upload Release Asset

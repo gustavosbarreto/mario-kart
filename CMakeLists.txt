@@ -34,6 +34,24 @@ add_custom_target(run-editor
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+# Copy Data directory to build folder for convenience
+add_custom_target(copy-data ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/data
+        ${CMAKE_CURRENT_BINARY_DIR}/data
+    COMMENT "Copying Data directory to build folder"
+)
+
+# Install rules for distribution
+install(TARGETS game editor
+    RUNTIME DESTINATION .
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/data
+    DESTINATION .
+    PATTERN ".DS_Store" EXCLUDE
+)
+
 # Print summary
 message(STATUS "SDL2 include: ${SDL2_INCLUDE_DIRS}")
 message(STATUS "SDL2_ttf include: ${SDL2_TTF_INCLUDE_DIRS}")
