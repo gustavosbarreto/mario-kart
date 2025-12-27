@@ -25,7 +25,9 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake
+          sudo apt-get install -y build-essential cmake libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+              libxinerama-dev libxi-dev libxss-dev libxrender-dev \
+              libasound2-dev libpulse-dev libpipewire-0.3-dev
 
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
