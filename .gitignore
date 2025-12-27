@@ -1,4 +1,5 @@
 *.o
+*.dSYM
 
 Game/game
 TrackEditor/editor
