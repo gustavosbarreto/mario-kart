@@ -169,6 +169,12 @@ BITMAP *load_bitmap(const char *filename, void *pal) {
     return NULL;
   }
   
+  // Set magenta (255, 0, 255) as the transparent color key on the loaded surface
+  // This is the standard transparency color in Allegro 4
+  // We must do this BEFORE converting to ensure transparency is preserved
+  Uint32 magenta = SDL_MapRGB(loaded->format, 255, 0, 255);
+  SDL_SetColorKey(loaded, SDL_TRUE, magenta);
+  
   // Convert to our standard 32-bit format for consistency
   #if SDL_BYTEORDER == SDL_BIG_ENDIAN
     Uint32 rmask = 0xff000000;
@@ -186,18 +192,16 @@ BITMAP *load_bitmap(const char *filename, void *pal) {
                                                rmask, gmask, bmask, amask);
   if (surface) {
     // Blit the loaded surface to the new surface to convert format
+    // The color key will be respected during the blit, making magenta pixels transparent
     SDL_BlitSurface(loaded, NULL, surface, NULL);
     SDL_FreeSurface(loaded);
     
-    // Set magenta (255, 0, 255) as the transparent color key
-    // This is the standard transparency color in Allegro 4
-    Uint32 magenta = SDL_MapRGB(surface->format, 255, 0, 255);
-    SDL_SetColorKey(surface, SDL_TRUE, magenta);
+    // Set the color key on the converted surface as well
+    Uint32 magenta_converted = SDL_MapRGB(surface->format, 255, 0, 255);
+    SDL_SetColorKey(surface, SDL_TRUE, magenta_converted);
   } else {
-    // If conversion failed, use the original
+    // If conversion failed, use the original (already has color key set)
     surface = loaded;
-    Uint32 magenta = SDL_MapRGB(surface->format, 255, 0, 255);
-    SDL_SetColorKey(surface, SDL_TRUE, magenta);
   }
   
   return surface;
