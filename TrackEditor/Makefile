@@ -1,6 +1,6 @@
 CC		= g++
 CFLAGS	= -Wall -pipe -g -W -O2 
-LDFLAGS	= $(shell pkg-config --libs sdl2 SDL2_ttf)
+LDFLAGS	= $(shell pkg-config --libs sdl2 SDL2_ttf SDL2_image)
 SOURCES	= \
 	../Common/allegro.cpp			\
 	../Common/AllegroSystem.cpp		\
@@ -15,7 +15,7 @@ SOURCES	= \
 EXECUTABLE	= editor
 
 all: 
-	$(CC) TrackEditor.cpp -o $(EXECUTABLE) $(CFLAGS) -I../Common/ -I../Game $(shell pkg-config --cflags sdl2 SDL2_ttf) $(SOURCES) $(LDFLAGS)
+	$(CC) TrackEditor.cpp -o $(EXECUTABLE) $(CFLAGS) -I../Common/ -I../Game $(shell pkg-config --cflags sdl2 SDL2_ttf SDL2_image) $(SOURCES) $(LDFLAGS)
 
 clean:
 	rm -rf *.o *.dSYM

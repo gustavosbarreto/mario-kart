@@ -1,7 +1,7 @@
 CC		= g++
 CFLAGS	= -c -Wall -pipe -g -W -O2
-INC	= $(shell pkg-config --cflags sdl2 SDL2_ttf)
-LIB	= $(shell pkg-config --libs sdl2 SDL2_ttf)
+INC	= $(shell pkg-config --cflags sdl2 SDL2_ttf SDL2_image)
+LIB	= $(shell pkg-config --libs sdl2 SDL2_ttf SDL2_image)
 
 all: 
 	$(CC) $(CFLAGS) *.cpp $(INC) $(LIB)
