@@ -3,7 +3,6 @@
  */
 
 #include "allegro.h"
-#include <SDL_mixer.h>
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
@@ -29,6 +28,9 @@ static bool _quit_requested = false;
 static bool _mixer_initialized = false;
 static Mix_Music *_current_music = nullptr;
 static std::string _current_music_path;
+
+// Sound management
+static std::queue<Mix_Chunk*> _sound_queue;  // Queue of loaded sound effects
 
 // Timer callback management
 struct TimerInfo {
@@ -107,6 +109,43 @@ bool load_music(const char *path) {
     _current_music_path.clear();
     return false;
   }
+  return true;
+}
+
+bool load_sound(const char *path) {
+  if (!_mixer_initialized) {
+    int freq, channels;
+    Uint16 fmt;
+    if (Mix_QuerySpec(&freq, &fmt, &channels) == 0) {
+      if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        std::cerr << "Mix_OpenAudio failed: " << Mix_GetError() << std::endl;
+        return false;
+      }
+      _mixer_initialized = true;
+    }
+  }
+
+  // Load WAV sound effect
+  Mix_Chunk *sound = Mix_LoadWAV(path);
+  if (!sound) {
+    std::cerr << "Mix_LoadWAV failed for '" << (path ? path : "")
+              << "': " << Mix_GetError() << std::endl;
+    return false;
+  }
+
+  // Play on first available channel, volume at max
+  int channel = Mix_PlayChannel(-1, sound, 0);
+  if (channel < 0) {
+    std::cerr << "Mix_PlayChannel failed for '" << (path ? path : "")
+              << "': " << Mix_GetError() << std::endl;
+    Mix_FreeChunk(sound);
+    return false;
+  }
+  
+  // Store in queue for cleanup later
+  _sound_queue.push(sound);
+  Mix_Volume(channel, MIX_MAX_VOLUME);
+  
   return true;
 }
 
