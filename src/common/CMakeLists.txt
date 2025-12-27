@@ -134,6 +134,11 @@ target_include_directories(common
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+# On Windows with static SDL2, we need to handle SDL_main manually
+if(WIN32)
+    target_compile_definitions(common PUBLIC SDL_MAIN_HANDLED)
+endif()
+
 target_link_libraries(common
     PUBLIC
         SDL2::SDL2-static

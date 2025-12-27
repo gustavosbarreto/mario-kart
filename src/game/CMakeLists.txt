@@ -28,3 +28,8 @@ target_link_libraries(game
     PRIVATE
         common
 )
+
+# On Windows with static SDL2, we need to handle SDL_main manually
+if(WIN32)
+    target_compile_definitions(game PRIVATE SDL_MAIN_HANDLED)
+endif()
