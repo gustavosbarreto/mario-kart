@@ -10,8 +10,7 @@ SOURCES	= \
 	../Common/ObjectSize.cpp		\
 	../Common/Track.cpp				\
 	../Game/Camera.cpp			    \
-	main.cpp						\
-	TrackEditor.h
+	main.cpp
 
 EXECUTABLE	= editor
 
