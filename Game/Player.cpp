@@ -5,9 +5,10 @@
 
 Player::Player() {
   mBitmap = create_bitmap(32, 32);
-  mSprite = load_bitmap("Data/Mario.bmp", NULL);
+  mSprite = load_bitmap("Data/Mario.png", NULL);
 
-  floodfill(mBitmap, 0, 0, makecol(0, 0, 0));
+  // Start with a fully transparent buffer to preserve sprite alpha
+  clear(mBitmap);
   blit(mSprite, mBitmap, 0, 0, 0, 0, 32, 32);
 
   // Ajustar isso

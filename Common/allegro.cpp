@@ -39,6 +39,11 @@ int allegro_init(void) {
   if (TTF_Init() < 0) {
     return -1;
   }
+  // Initialize SDL_image for PNG support
+  int img_flags = IMG_INIT_PNG;
+  if ((IMG_Init(img_flags) & img_flags) != img_flags) {
+    return -1;
+  }
   atexit(_allegro_cleanup);
   return 0;
 }
@@ -164,47 +169,43 @@ BITMAP *create_bitmap(int width, int height) {
 // Load a bitmap from file
 BITMAP *load_bitmap(const char *filename, void *pal) {
   (void)pal; // Unused
-  SDL_Surface *loaded = SDL_LoadBMP(filename);
+
+  // Try SDL_image first (supports PNG and more); fallback to BMP
+  SDL_Surface *loaded = IMG_Load(filename);
+  if (!loaded) {
+    loaded = SDL_LoadBMP(filename);
+  }
   if (!loaded) {
     return NULL;
   }
-  
-  // Set magenta (255, 0, 255) as the transparent color key on the loaded surface
-  // This is the standard transparency color in Allegro 4
-  // We must do this BEFORE converting to ensure transparency is preserved
-  Uint32 magenta = SDL_MapRGB(loaded->format, 255, 0, 255);
-  SDL_SetColorKey(loaded, SDL_TRUE, magenta);
-  
-  // Convert to our standard 32-bit format for consistency
-  #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    Uint32 rmask = 0xff000000;
-    Uint32 gmask = 0x00ff0000;
-    Uint32 bmask = 0x0000ff00;
-    Uint32 amask = 0x000000ff;
-  #else
-    Uint32 rmask = 0x00ff0000;
-    Uint32 gmask = 0x0000ff00;
-    Uint32 bmask = 0x000000ff;
-    Uint32 amask = 0xff000000;
-  #endif
-  
-  SDL_Surface *surface = SDL_CreateRGBSurface(0, loaded->w, loaded->h, 32, 
-                                               rmask, gmask, bmask, amask);
-  if (surface) {
-    // Blit the loaded surface to the new surface to convert format
-    // The color key will be respected during the blit, making magenta pixels transparent
-    SDL_BlitSurface(loaded, NULL, surface, NULL);
-    SDL_FreeSurface(loaded);
-    
-    // Set the color key on the converted surface as well
-    Uint32 magenta_converted = SDL_MapRGB(surface->format, 255, 0, 255);
-    SDL_SetColorKey(surface, SDL_TRUE, magenta_converted);
+
+  // Decide transparency method: if image has an alpha channel, use blending;
+  // otherwise apply classic magenta colorkey transparency.
+  const bool has_alpha = (loaded->format->Amask != 0);
+  if (!has_alpha) {
+    Uint32 magenta = SDL_MapRGB(loaded->format, 255, 0, 255);
+    SDL_SetColorKey(loaded, SDL_TRUE, magenta);
   } else {
-    // If conversion failed, use the original (already has color key set)
-    surface = loaded;
+    SDL_SetSurfaceBlendMode(loaded, SDL_BLENDMODE_BLEND);
   }
-  
-  return surface;
+
+  // Convert to a standard ARGB8888 surface while preserving alpha/colorkey
+  SDL_Surface *converted = SDL_ConvertSurfaceFormat(loaded, SDL_PIXELFORMAT_ARGB8888, 0);
+  SDL_FreeSurface(loaded);
+  if (!converted) {
+    return NULL;
+  }
+
+  // Ensure blend mode is set for alpha surfaces
+  if (has_alpha) {
+    SDL_SetSurfaceBlendMode(converted, SDL_BLENDMODE_BLEND);
+  } else {
+    // Reapply colorkey on converted surface if used
+    Uint32 magenta_conv = SDL_MapRGB(converted->format, 255, 0, 255);
+    SDL_SetColorKey(converted, SDL_TRUE, magenta_conv);
+  }
+
+  return converted;
 }
 
 // Destroy a bitmap
@@ -416,6 +417,7 @@ void _allegro_cleanup(void) {
     SDL_DestroyWindow(_window);
     _window = NULL;
   }
+  IMG_Quit();
   TTF_Quit();
   SDL_Quit();
 }

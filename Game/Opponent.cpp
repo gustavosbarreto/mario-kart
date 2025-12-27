@@ -10,17 +10,18 @@ Opponent::Opponent(Character character) : mCharacter(character) {
 
   switch (mCharacter) {
   case Luigi:
-    mSprite = load_bitmap("Data/Luigi.bmp", NULL);
+    mSprite = load_bitmap("Data/Luigi.png", NULL);
     break;
   case Peach:
-    mSprite = load_bitmap("Data/Peach.bmp", NULL);
+    mSprite = load_bitmap("Data/Peach.png", NULL);
     break;
   case Mario:
-    mSprite = load_bitmap("Data/Mario.bmp", NULL);
+    mSprite = load_bitmap("Data/Mario.png", NULL);
     break;
   }
 
-  floodfill(mBitmap, 0, 0, makecol(0, 0, 0));
+  // Transparent background to preserve sprite alpha
+  clear(mBitmap);
   blit(mSprite, mBitmap, 0, 0, 0, 0, 32, 32);
 }
 

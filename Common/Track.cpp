@@ -9,8 +9,14 @@ using namespace std;
 
 Track::Track(int number) : mNumber(number) {
   std::stringstream mapFileName;
-  mapFileName << "Data/Track" << number << ".bmp";
+  // Prefer PNG; fallback to BMP if PNG is not available
+  mapFileName << "Data/Track" << number << ".png";
   mBitmap = load_bitmap(mapFileName.str().c_str(), NULL);
+  if (!mBitmap) {
+    std::stringstream bmpFileName;
+    bmpFileName << "Data/Track" << number << ".bmp";
+    mBitmap = load_bitmap(bmpFileName.str().c_str(), NULL);
+  }
 }
 
 const TrackInfo Track::info() {
