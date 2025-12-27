@@ -31,13 +31,14 @@ jobs:
           brew install cmake pkg-config
 
       - name: Configure
+        shell: bash
         if: runner.os != 'Windows'
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: |
-          cmake --build build --config Release --parallel
+          cmake --build build --config Release --parallel -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
       - name: Install (Linux/macOS)
         if: runner.os != 'Windows'
