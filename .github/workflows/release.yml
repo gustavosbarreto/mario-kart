@@ -22,40 +22,22 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake pkg-config libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev
+          sudo apt-get install -y build-essential cmake
 
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
           brew update
-          brew install cmake pkg-config sdl2 sdl2_ttf sdl2_image
-
-      - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          # Install vcpkg
-          git clone https://github.com/Microsoft/vcpkg.git $env:TEMP\vcpkg
-          & "$env:TEMP\vcpkg\bootstrap-vcpkg.bat"
-          
-          # Install SDL2 dependencies via vcpkg
-          & "$env:TEMP\vcpkg\vcpkg" install sdl2:x64-windows sdl2-ttf:x64-windows sdl2-image:x64-windows
+          brew install cmake pkg-config
 
       - name: Configure
         if: runner.os != 'Windows'
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
-      - name: Configure (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $vcpkgPath = "$env:TEMP\vcpkg"
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$vcpkgPath\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows
-
       - name: Build
         run: |
-          cmake --build build --config Release --parallel
+          cmake --build build --config Release --parallel -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
       - name: Install (Linux/macOS)
         if: runner.os != 'Windows'
