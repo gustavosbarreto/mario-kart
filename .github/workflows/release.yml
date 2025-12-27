@@ -71,6 +71,6 @@ jobs:
           files: |
             mario-kart-${{ github.ref_name }}-linux-x64.tar.gz
             mario-kart-${{ github.ref_name }}-macos-x64.tar.gz
-            mario-kart-${{ github.ref_name }}-windows-x64.zip
+            mario-kart-${{ github.ref_name }}-windows-x64.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
