@@ -34,7 +34,6 @@ jobs:
           brew install cmake pkg-config
 
       - name: Configure
-        if: runner.os != 'Windows'
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
