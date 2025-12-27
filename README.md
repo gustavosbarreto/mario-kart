@@ -21,11 +21,18 @@ Run
 Game
 
 ```shell
-make run-game
+make run/game
 ```
 
 Track Editor
 
 ```shell
-make run-editor
+make run/editor
 ```
+
+
+References
+-------------
+
+- [SMK Sprites](https://www.spriters-resource.com/snes/smariokart/)
+- [SMK Music](https://downloads.khinsider.com/game-soundtracks/album/super-mario-kart-gamerip)
