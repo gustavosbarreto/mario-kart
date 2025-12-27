@@ -2,7 +2,7 @@
 #include "AllegroSystem.h"
 #include "TrackEditor.h"
 
-#include <allegro.h>
+#include "allegro.h"
 #include <iostream>
 
 int main() {

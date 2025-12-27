@@ -6,7 +6,7 @@
  * dar impressão de um pseudo 3D apartir de um BITMAP 2D.
  */
 
-#include <allegro.h>
+#include "allegro.h"
 
 namespace SuperMode7 {
 struct Params {

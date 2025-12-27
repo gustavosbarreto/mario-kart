@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <allegro.h>
+#include "allegro.h"
 
 class Opponent {
 public:

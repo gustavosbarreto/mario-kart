@@ -4,7 +4,7 @@
 #include "ColorDepth.h"
 #include "ObjectSize.h"
 
-#include <allegro.h>
+#include "allegro.h"
 
 class AllegroSystem;
 

@@ -8,7 +8,7 @@
 #include <cmath>
 #include <iostream>
 
-#include <allegro.h>
+#include "allegro.h"
 
 using namespace std;
 

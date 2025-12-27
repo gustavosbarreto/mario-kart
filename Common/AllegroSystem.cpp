@@ -2,7 +2,7 @@
 #include "AllegroKeyboard.h"
 #include "AllegroScreen.h"
 
-#include <allegro.h>
+#include "allegro.h"
 #include <iostream>
 #include <string>
 

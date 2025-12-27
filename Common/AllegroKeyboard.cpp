@@ -1,6 +1,6 @@
 #include "AllegroKeyboard.h"
 
-#include <allegro.h>
+#include "allegro.h"
 #include <iostream>
 
 AllegroKeyboard::AllegroKeyboard() { install_keyboard(); }

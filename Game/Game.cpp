@@ -7,7 +7,7 @@
 #include "SuperMode7.h"
 #include "Track.h"
 
-#include <allegro.h>
+#include "allegro.h"
 #include <cmath>
 #include <fstream>
 #include <iostream>
