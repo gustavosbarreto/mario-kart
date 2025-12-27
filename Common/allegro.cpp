@@ -134,9 +134,7 @@ int set_gfx_mode(int card, int w, int h, int v_w, int v_h) {
   if (!font) {
     // Try to load a common system font
     const char *font_paths[] = {
-      "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-      "/usr/share/fonts/TTF/DejaVuSans.ttf",
-      "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+      "/Data/arial.ttf",
       NULL
     };
     
