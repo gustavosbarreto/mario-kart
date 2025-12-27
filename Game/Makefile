@@ -1,8 +1,9 @@
 CC		= g++
 CFLAGS	= -c -Wall -pipe -g -W -O2
-LDFLAGS	= $(shell pkg-config --libs allegro)
+LDFLAGS	= $(shell pkg-config --libs sdl2 SDL2_ttf)
 
 SOURCES	= \
+	../Common/allegro.cpp			\
 	../Common/AllegroSystem.cpp		\
 	../Common/AllegroScreen.cpp		\
 	../Common/AllegroKeyboard.cpp	\
@@ -25,8 +26,8 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
 
 .cpp.o:
-	$(CC) $(CFLAGS) -c $< -o $@ -I../Common/ 
+	$(CC) $(CFLAGS) -c $< -o $@ -I../Common/ $(shell pkg-config --cflags sdl2 SDL2_ttf)
 
 clean:
-	rm -f *.o
+	rm -f *.o ../Common/*.o
 	rm -f $(EXECUTABLE)

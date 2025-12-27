@@ -1,7 +1,7 @@
 #ifndef _TRACK_H
 #define _TRACK_H
 
-#include <allegro.h>
+#include "allegro.h"
 
 struct TrackInfo {
   double startCameraX;

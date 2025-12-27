@@ -2,7 +2,7 @@
 #include "AllegroSystem.h"
 #include "Game.h"
 
-#include <allegro.h>
+#include "allegro.h"
 #include <iostream>
 
 int main() {

@@ -1,7 +1,8 @@
 CC		= g++
 CFLAGS	= -Wall -pipe -g -W -O2 
-LDFLAGS	= $(shell pkg-config --libs allegro)
+LDFLAGS	= $(shell pkg-config --libs sdl2 SDL2_ttf)
 SOURCES	= \
+	../Common/allegro.cpp			\
 	../Common/AllegroSystem.cpp		\
 	../Common/AllegroScreen.cpp		\
 	../Common/AllegroKeyboard.cpp	\
@@ -15,7 +16,7 @@ SOURCES	= \
 EXECUTABLE	= editor
 
 all: 
-	$(CC) TrackEditor.cpp -o $(EXECUTABLE) $(CFLAGS) -I../Common/ -I../Game $(SOURCES) $(LDFLAGS)
+	$(CC) TrackEditor.cpp -o $(EXECUTABLE) $(CFLAGS) -I../Common/ -I../Game $(shell pkg-config --cflags sdl2 SDL2_ttf) $(SOURCES) $(LDFLAGS)
 
 clean:
 	rm -f *.o
