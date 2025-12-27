@@ -18,5 +18,5 @@ all:
 	$(CC) TrackEditor.cpp -o $(EXECUTABLE) $(CFLAGS) -I../Common/ -I../Game $(shell pkg-config --cflags sdl2 SDL2_ttf) $(SOURCES) $(LDFLAGS)
 
 clean:
-	rm -f *.o
+	rm -f *.o *.dSYM
 	rm -f $(EXECUTABLE)
