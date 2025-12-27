@@ -7,12 +7,20 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Dependencies via pkg-config
-find_package(PkgConfig REQUIRED)
+# Dependencies via pkg-config (Linux/macOS) or find_package (Windows/vcpkg)
+find_package(PkgConfig QUIET)
 
-pkg_check_modules(SDL2 REQUIRED sdl2)
-pkg_check_modules(SDL2_TTF REQUIRED SDL2_ttf)
-pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
+if(PkgConfig_FOUND)
+  # Linux/macOS: use pkg-config
+  pkg_check_modules(SDL2 REQUIRED sdl2)
+  pkg_check_modules(SDL2_TTF REQUIRED SDL2_ttf)
+  pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
+else()
+  # Windows: use find_package with vcpkg
+  find_package(SDL2 REQUIRED CONFIG)
+  find_package(SDL2_ttf REQUIRED CONFIG)
+  find_package(SDL2_image REQUIRED CONFIG)
+endif()
 
 # Common library in subdirectory
 add_subdirectory(src/common)
