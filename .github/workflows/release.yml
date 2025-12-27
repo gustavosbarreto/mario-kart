@@ -50,8 +50,8 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           mkdir -p dist
-          cp build/game build/editor dist/
-          cp -a Data dist/
+          cp build/src/game/game build/src/editor/editor dist/
+          cp -a data dist/
           tar czf mario-kart-${{ github.ref_name }}-${{ runner.os }}-x64.tar.gz -C dist .
 
       - name: Package (Windows)
