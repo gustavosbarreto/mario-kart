@@ -70,7 +70,8 @@ jobs:
       - name: Package (Linux/macOS)
         if: runner.os != 'Windows'
         run: |
-          tar czf mario-kart-${{ github.ref_name }}-${{ runner.os }}-x64.tar.gz -C dist .
+          OS_NAME=$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]')
+          tar czf mario-kart-${{ github.ref_name }}-${OS_NAME}-x64.tar.gz -C dist .
 
       - name: Package (Windows)
         if: runner.os == 'Windows'
@@ -84,7 +85,7 @@ jobs:
         with:
           files: |
             mario-kart-${{ github.ref_name }}-linux-x64.tar.gz
-            mario-kart-${{ github.ref_name }}-macOS-x64.tar.gz
+            mario-kart-${{ github.ref_name }}-macos-x64.tar.gz
             mario-kart-${{ github.ref_name }}-windows-x64.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
