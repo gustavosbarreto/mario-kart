@@ -164,7 +164,14 @@ BITMAP *create_bitmap(int width, int height) {
 // Load a bitmap from file
 BITMAP *load_bitmap(const char *filename, void *pal) {
   (void)pal; // Unused
-  return SDL_LoadBMP(filename);
+  SDL_Surface *surface = SDL_LoadBMP(filename);
+  if (surface) {
+    // Set magenta (255, 0, 255) as the transparent color key
+    // This is the standard transparency color in Allegro 4
+    Uint32 magenta = SDL_MapRGB(surface->format, 255, 0, 255);
+    SDL_SetColorKey(surface, SDL_TRUE, magenta);
+  }
+  return surface;
 }
 
 // Destroy a bitmap
