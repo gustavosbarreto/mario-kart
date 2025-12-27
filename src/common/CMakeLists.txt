@@ -74,6 +74,24 @@ set(SDL2TTF_INSTALL OFF CACHE BOOL "" FORCE)
 set(SDL2TTF_VENDORED ON CACHE BOOL "" FORCE)
 
 # ------------------------------------------------------------------------------
+# SDL2_mixer options
+# ------------------------------------------------------------------------------
+set(SDL2MIXER_INSTALL OFF CACHE BOOL "" FORCE)
+set(SDL2MIXER_DEPS_SHARED OFF CACHE BOOL "" FORCE)
+set(SDL2MIXER_VENDORED ON CACHE BOOL "" FORCE)
+set(SDL2MIXER_MIDI ON CACHE BOOL "" FORCE)
+set(SDL2MIXER_WAVE ON CACHE BOOL "" FORCE)
+# Audio backends (Linux)
+if(UNIX AND NOT APPLE)
+    set(SDL_AUDIO_DRIVER_ALSA ON CACHE BOOL "" FORCE)
+    set(SDL_AUDIO_DRIVER_PULSEAUDIO ON CACHE BOOL "" FORCE)
+    set(SDL_AUDIO_DRIVER_PIPEWIRE ON CACHE BOOL "" FORCE)
+
+    set(SDL_VIDEO_X11 ON CACHE BOOL "" FORCE)
+    set(SDL_VIDEO_WAYLAND ON CACHE BOOL "" FORCE)
+endif()
+
+# ------------------------------------------------------------------------------
 # SDL audio/video backends (Linux only)
 # ------------------------------------------------------------------------------
 if(UNIX AND NOT APPLE)
@@ -109,7 +127,13 @@ FetchContent_Declare(
     GIT_SHALLOW    TRUE
 )
 
-FetchContent_MakeAvailable(SDL2 SDL2_image SDL2_ttf)
+FetchContent_Declare(SDL2_mixer 
+    GIT_REPOSITORY https://github.com/libsdl-org/SDL_mixer.git 
+    GIT_TAG        release-2.8.1
+    GIT_SHALLOW    TRUE
+)
+
+FetchContent_MakeAvailable(SDL2 SDL2_image SDL2_ttf SDL2_mixer)
 
 # ------------------------------------------------------------------------------
 # Include paths (from FetchContent build tree)
@@ -117,6 +141,7 @@ FetchContent_MakeAvailable(SDL2 SDL2_image SDL2_ttf)
 set(SDL2_INCLUDE_DIRS        "${CMAKE_BINARY_DIR}/_deps/sdl2-src/include")
 set(SDL2_IMAGE_INCLUDE_DIRS  "${CMAKE_BINARY_DIR}/_deps/sdl2_image-src/include")
 set(SDL2_TTF_INCLUDE_DIRS    "${CMAKE_BINARY_DIR}/_deps/sdl2_ttf-src")
+set(SDL2_MIXER_INCLUDE_DIRS  "${CMAKE_BINARY_DIR}/_deps/sdl2_mixer-src/include")
 
 # ------------------------------------------------------------------------------
 # Common static library
@@ -137,6 +162,7 @@ target_include_directories(common
         ${SDL2_INCLUDE_DIRS}
         ${SDL2_IMAGE_INCLUDE_DIRS}
         ${SDL2_TTF_INCLUDE_DIRS}
+        ${SDL2_MIXER_INCLUDE_DIRS}
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
@@ -150,6 +176,7 @@ target_link_libraries(common
         SDL2::SDL2-static
         SDL2_image::SDL2_image-static
         SDL2_ttf::SDL2_ttf-static
+        SDL2_mixer::SDL2_mixer-static
         png_static
         zlibstatic
 )
