@@ -34,6 +34,11 @@ void Player::processInputEvents() {
 
   if (key[KEY_RIGHT])
     mAngleAcc += (6 - mAcc) / 100;
+
+  if (key[KEY_SPACE]) {
+    std::cout << "Jump!" << std::endl;
+    load_sound("data/jump.wav");
+  }
 }
 
 void Player::update() {
