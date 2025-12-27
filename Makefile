@@ -1,13 +1,23 @@
-run-game:
-	cd Game && make && ./game
+SHELL := /bin/bash
 
-run-editor:
-	cd TrackEditor && make && ./editor
+.PHONY: configure build clean run-game run-editor format install-formatter
+
+configure:
+	mkdir -p build
+	cd build && cmake ..
+
+build: configure
+	cmake --build build -j
 
 clean:
-	cd Game && make clean
-	cd TrackEditor && make clean
-	cd Common && make clean
+	@if [ -d build ]; then cmake --build build --target clean || true; fi
+	rm -rf build
+
+run-game: build
+	cmake --build build --target run-game || ./build/game
+
+run-editor: build
+	cmake --build build --target run-editor || ./build/editor
 
 install-formatter:
 	sudo apt install clang-format
