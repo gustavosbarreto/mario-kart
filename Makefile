@@ -3,8 +3,7 @@ SHELL := /bin/bash
 .PHONY: configure build clean run-game run-editor format install-formatter
 
 configure:
-	mkdir -p build
-	cd build && cmake ..
+	cmake -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
 build: configure
 	cmake --build build -j
