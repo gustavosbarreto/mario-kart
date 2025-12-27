@@ -20,7 +20,7 @@ Game features
 
 * SDL2
 * SDL2_ttf
-* make
+* cmake
 * gcc/g++
 
 ```shell
@@ -30,18 +30,6 @@ sudo apt install libsdl2-dev libsdl2-ttf-dev
 # Build
 
 The project uses SDL2 and SDL2_ttf libraries. A compatibility layer (`Common/allegro.h` and `Common/allegro.cpp`) provides the Allegro 4 API on top of SDL2, allowing the game code to remain mostly unchanged.
-
-Game
-
-```shell
-cd Game && make
-```
-
-Track Editor
-
-```shell
-cd TrackEditor && make
-```
 
 # Run
 
