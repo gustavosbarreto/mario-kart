@@ -26,7 +26,4 @@ target_link_directories(editor
 target_link_libraries(editor
     PRIVATE
         common
-        ${SDL2_LIBRARIES}
-        ${SDL2_TTF_LIBRARIES}
-        ${SDL2_IMAGE_LIBRARIES}
 )
