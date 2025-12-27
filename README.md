@@ -1,4 +1,5 @@
 [![release](https://github.com/humbertodias/mario-kart/actions/workflows/release.yml/badge.svg)](https://github.com/humbertodias/mario-kart/actions/workflows/release.yml)
+![GitHub all releases](https://img.shields.io/github/downloads/humbertodias/mario-kart/total)
 
 Mario Kart Clone
 ================
