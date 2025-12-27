@@ -93,12 +93,25 @@ int set_gfx_mode(int card, int w, int h, int v_w, int v_h) {
   SCREEN_W = w;
   SCREEN_H = h;
 
-  // Create the screen surface
+  // Create the screen surface with correct byte order for ARGB8888
   if (screen) {
     SDL_FreeSurface(screen);
   }
-  screen = SDL_CreateRGBSurface(0, w, h, 32,
-                                0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+  
+  // Use SDL_PIXELFORMAT_ARGB8888 format masks
+  #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    Uint32 rmask = 0xff000000;
+    Uint32 gmask = 0x00ff0000;
+    Uint32 bmask = 0x0000ff00;
+    Uint32 amask = 0x000000ff;
+  #else
+    Uint32 rmask = 0x00ff0000;
+    Uint32 gmask = 0x0000ff00;
+    Uint32 bmask = 0x000000ff;
+    Uint32 amask = 0xff000000;
+  #endif
+  
+  screen = SDL_CreateRGBSurface(0, w, h, 32, rmask, gmask, bmask, amask);
   if (!screen) {
     return -1;
   }
@@ -133,8 +146,19 @@ int set_gfx_mode(int card, int w, int h, int v_w, int v_h) {
 
 // Create a bitmap
 BITMAP *create_bitmap(int width, int height) {
-  return SDL_CreateRGBSurface(0, width, height, 32,
-                              0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+  #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    Uint32 rmask = 0xff000000;
+    Uint32 gmask = 0x00ff0000;
+    Uint32 bmask = 0x0000ff00;
+    Uint32 amask = 0x000000ff;
+  #else
+    Uint32 rmask = 0x00ff0000;
+    Uint32 gmask = 0x0000ff00;
+    Uint32 bmask = 0x000000ff;
+    Uint32 amask = 0xff000000;
+  #endif
+  
+  return SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
 }
 
 // Load a bitmap from file
@@ -239,8 +263,12 @@ void clear(BITMAP *bmp) {
 
 // Make color
 Uint32 makecol(int r, int g, int b) {
-  // Return color in ARGB8888 format
-  return 0xFF000000 | (r << 16) | (g << 8) | b;
+  // Create a color matching our surface format
+  if (screen) {
+    return SDL_MapRGB(screen->format, r, g, b);
+  }
+  // Fallback to ARGB8888 format
+  return (0xFF << 24) | (r << 16) | (g << 8) | b;
 }
 
 // Text printf with extended parameters
@@ -270,12 +298,14 @@ void textprintf_ex(BITMAP *bmp, TTF_Font *f, int x, int y, Uint32 color,
 
 // Rest (delay) function
 void rest(int time) {
+  // Poll events to keep the window responsive
+  _allegro_poll_events();
   SDL_Delay(time);
 }
 
 // Keyboard polling
 int keyboard_needs_poll(void) {
-  return 0; // SDL handles this automatically
+  return 1; // Always poll to ensure SDL events are processed
 }
 
 int poll_keyboard(void) {
