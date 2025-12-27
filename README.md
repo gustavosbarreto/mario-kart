@@ -34,5 +34,6 @@ make run/editor
 References
 -------------
 
-- [SMK Sprites](https://www.spriters-resource.com/snes/smariokart/)
-- [SMK Music](https://downloads.khinsider.com/game-soundtracks/album/super-mario-kart-gamerip)
+- [Sprites](https://www.spriters-resource.com/snes/smariokart/)
+- [Music](https://downloads.khinsider.com/game-soundtracks/album/super-mario-kart-gamerip)
+- [Sound effects](https://www.superluigibros.com/super-mario-kart-sound-effects-wav)

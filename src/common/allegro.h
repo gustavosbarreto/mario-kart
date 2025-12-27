@@ -73,6 +73,9 @@ Uint32 makecol(int r, int g, int b);
 void textprintf_ex(BITMAP *bmp, TTF_Font *f, int x, int y, Uint32 color,
                    int bg, const char *format, ...);
 
+// Audio helpers
+bool load_music(const char *path);
+
 // Timing functions
 void rest(int time);
 

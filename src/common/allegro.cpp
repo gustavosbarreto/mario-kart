@@ -3,11 +3,16 @@
  */
 
 #include "allegro.h"
+#include <SDL_mixer.h>
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
 #include <queue>
+#include <string>
 #include <vector>
+#include <iostream>
+
+using namespace std;
 
 // Global state
 static SDL_Window *_window = NULL;
@@ -21,6 +26,9 @@ int SCREEN_H = 0;
 
 static int _color_depth = 32;
 static bool _quit_requested = false;
+static bool _mixer_initialized = false;
+static Mix_Music *_current_music = nullptr;
+static std::string _current_music_path;
 
 // Timer callback management
 struct TimerInfo {
@@ -33,7 +41,7 @@ static std::vector<TimerInfo> _timers;
 
 // Initialize Allegro (maps to SDL_Init)
 int allegro_init(void) {
-  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0) {
     return -1;
   }
   if (TTF_Init() < 0) {
@@ -44,8 +52,62 @@ int allegro_init(void) {
   if ((IMG_Init(img_flags) & img_flags) != img_flags) {
     return -1;
   }
+
+  // Initialize SDL_mixer for audio (OGG support needed for track music)
+  int mix_flags = MIX_INIT_OGG;
+  if ((Mix_Init(mix_flags) & mix_flags) != mix_flags) {
+    return -1;
+  }
+  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+    return -1;
+  }
+  _mixer_initialized = true;
   atexit(_allegro_cleanup);
   return 0;
+}
+
+bool load_music(const char *path) {
+  if (!_mixer_initialized) {
+    int freq, channels;
+    Uint16 fmt;
+    if (Mix_QuerySpec(&freq, &fmt, &channels) == 0) {
+      if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        std::cerr << "Mix_OpenAudio failed: " << Mix_GetError() << std::endl;
+        return false;
+      }
+      _mixer_initialized = true;
+    }
+  }
+
+  if (_current_music_path == path && Mix_PlayingMusic()) {
+    return true; // Already playing this track
+  }
+
+  Mix_Music *music = Mix_LoadMUS(path);
+  if (!music) {
+    std::cerr << "Mix_LoadMUS failed for '" << (path ? path : "")
+              << "': " << Mix_GetError() << std::endl;
+    return false;
+  }
+
+  Mix_HaltMusic();
+  if (_current_music) {
+    Mix_FreeMusic(_current_music);
+    _current_music = nullptr;
+  }
+
+  _current_music = music;
+  _current_music_path = path ? path : "";
+  Mix_VolumeMusic(MIX_MAX_VOLUME);
+  if (Mix_PlayMusic(_current_music, -1) < 0) {
+    std::cerr << "Mix_PlayMusic failed for '" << (path ? path : "")
+              << "': " << Mix_GetError() << std::endl;
+    Mix_FreeMusic(_current_music);
+    _current_music = nullptr;
+    _current_music_path.clear();
+    return false;
+  }
+  return true;
 }
 
 // Install timer subsystem
@@ -395,6 +457,17 @@ void _allegro_poll_events(void) {
 
 // Cleanup
 void _allegro_cleanup(void) {
+  if (_current_music) {
+    Mix_HaltMusic();
+    Mix_FreeMusic(_current_music);
+    _current_music = nullptr;
+    _current_music_path.clear();
+  }
+  if (_mixer_initialized) {
+    Mix_CloseAudio();
+    Mix_Quit();
+    _mixer_initialized = false;
+  }
   if (font) {
     TTF_CloseFont(font);
     font = NULL;
