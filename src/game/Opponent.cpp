@@ -10,13 +10,13 @@ Opponent::Opponent(Character character) : mCharacter(character) {
 
   switch (mCharacter) {
   case Luigi:
-    mSprite = load_bitmap("Data/Luigi.png", NULL);
+    mSprite = load_bitmap("data/Luigi.png", NULL);
     break;
   case Peach:
-    mSprite = load_bitmap("Data/Peach.png", NULL);
+    mSprite = load_bitmap("data/Peach.png", NULL);
     break;
   case Mario:
-    mSprite = load_bitmap("Data/Mario.png", NULL);
+    mSprite = load_bitmap("data/Mario.png", NULL);
     break;
   }
 

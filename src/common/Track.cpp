@@ -10,11 +10,11 @@ using namespace std;
 Track::Track(int number) : mNumber(number) {
   std::stringstream mapFileName;
   // Prefer PNG; fallback to BMP if PNG is not available
-  mapFileName << "Data/Track" << number << ".png";
+  mapFileName << "data/Track" << number << ".png";
   mBitmap = load_bitmap(mapFileName.str().c_str(), NULL);
   if (!mBitmap) {
     std::stringstream bmpFileName;
-    bmpFileName << "Data/Track" << number << ".bmp";
+    bmpFileName << "data/Track" << number << ".bmp";
     mBitmap = load_bitmap(bmpFileName.str().c_str(), NULL);
   }
 }
@@ -23,7 +23,7 @@ const TrackInfo Track::info() {
   TrackInfo info;
 
   stringstream infoFileName;
-  infoFileName << "Data/Track";
+  infoFileName << "data/Track";
   infoFileName << mNumber << ".dat";
 
   ifstream ifs(infoFileName.str().c_str(), ios::binary);

@@ -15,11 +15,11 @@ pkg_check_modules(SDL2_TTF REQUIRED SDL2_ttf)
 pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
 
 # Common library in subdirectory
-add_subdirectory(Common)
+add_subdirectory(src/common)
 
 # Subdirectories for executables
-add_subdirectory(Game)
-add_subdirectory(TrackEditor)
+add_subdirectory(src/game)
+add_subdirectory(src/editor)
 
 # Convenience targets
 add_custom_target(run-game

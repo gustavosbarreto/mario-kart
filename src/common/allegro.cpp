@@ -134,7 +134,7 @@ int set_gfx_mode(int card, int w, int h, int v_w, int v_h) {
   if (!font) {
     // Try to load a common system font
     const char *font_paths[] = {
-      "Data/arial.ttf",
+      "data/arial.ttf",
       NULL
     };
     

@@ -1,29 +1,30 @@
-# TrackEditor module
+# Game module
 
-add_executable(editor
+add_executable(game
+    Camera.cpp
     main.cpp
-    TrackEditor.cpp
-    ../Game/Camera.cpp
+    Game.cpp
+    Opponent.cpp
+    Player.cpp
 )
 
-target_include_directories(editor
+target_include_directories(game
     PRIVATE
         ${SDL2_INCLUDE_DIRS}
         ${SDL2_TTF_INCLUDE_DIRS}
         ${SDL2_IMAGE_INCLUDE_DIRS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../Common
-        ${CMAKE_CURRENT_SOURCE_DIR}/../Game
+    ${CMAKE_CURRENT_SOURCE_DIR}/../common
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_directories(editor
+target_link_directories(game
     PRIVATE
         ${SDL2_LIBRARY_DIRS}
         ${SDL2_TTF_LIBRARY_DIRS}
         ${SDL2_IMAGE_LIBRARY_DIRS}
 )
 
-target_link_libraries(editor
+target_link_libraries(game
     PRIVATE
         common
         ${SDL2_LIBRARIES}

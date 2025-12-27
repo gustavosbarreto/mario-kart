@@ -5,7 +5,7 @@
 
 Player::Player() {
   mBitmap = create_bitmap(32, 32);
-  mSprite = load_bitmap("Data/Mario.png", NULL);
+  mSprite = load_bitmap("data/Mario.png", NULL);
 
   // Start with a fully transparent buffer to preserve sprite alpha
   clear(mBitmap);
