@@ -14,7 +14,8 @@ Game features
 * Player movement
 * Fake 3D using the Super Mode 7 algorithm
 
-# Run
+Run
+-------------
 
 Game
 
