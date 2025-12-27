@@ -164,13 +164,42 @@ BITMAP *create_bitmap(int width, int height) {
 // Load a bitmap from file
 BITMAP *load_bitmap(const char *filename, void *pal) {
   (void)pal; // Unused
-  SDL_Surface *surface = SDL_LoadBMP(filename);
+  SDL_Surface *loaded = SDL_LoadBMP(filename);
+  if (!loaded) {
+    return NULL;
+  }
+  
+  // Convert to our standard 32-bit format for consistency
+  #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    Uint32 rmask = 0xff000000;
+    Uint32 gmask = 0x00ff0000;
+    Uint32 bmask = 0x0000ff00;
+    Uint32 amask = 0x000000ff;
+  #else
+    Uint32 rmask = 0x00ff0000;
+    Uint32 gmask = 0x0000ff00;
+    Uint32 bmask = 0x000000ff;
+    Uint32 amask = 0xff000000;
+  #endif
+  
+  SDL_Surface *surface = SDL_CreateRGBSurface(0, loaded->w, loaded->h, 32, 
+                                               rmask, gmask, bmask, amask);
   if (surface) {
+    // Blit the loaded surface to the new surface to convert format
+    SDL_BlitSurface(loaded, NULL, surface, NULL);
+    SDL_FreeSurface(loaded);
+    
     // Set magenta (255, 0, 255) as the transparent color key
     // This is the standard transparency color in Allegro 4
     Uint32 magenta = SDL_MapRGB(surface->format, 255, 0, 255);
     SDL_SetColorKey(surface, SDL_TRUE, magenta);
+  } else {
+    // If conversion failed, use the original
+    surface = loaded;
+    Uint32 magenta = SDL_MapRGB(surface->format, 255, 0, 255);
+    SDL_SetColorKey(surface, SDL_TRUE, magenta);
   }
+  
   return surface;
 }
 
