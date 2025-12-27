@@ -9,9 +9,36 @@ set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
 
 include(FetchContent)
 
+# --- zlib ---
+set(ZLIB_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(ZLIB_BUILD_STATIC ON CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+        zlib
+        GIT_REPOSITORY https://github.com/madler/zlib.git
+        GIT_TAG v1.3.1.2
+)
+FetchContent_MakeAvailable(zlib)
+
+if(TARGET zlibstatic AND NOT TARGET ZLIB::ZLIB)
+    add_library(ZLIB::ZLIB ALIAS zlibstatic)
+endif()
+
 # ------------------------------------------------------------------------------
 # libpng (vendored)
 # ------------------------------------------------------------------------------
+set(PNG_SHARED OFF CACHE BOOL "" FORCE)
+set(PNG_STATIC ON CACHE BOOL "" FORCE)
+set(PNG_FRAMEWORK OFF CACHE BOOL "" FORCE)
+set(PNG_TESTS OFF CACHE BOOL "" FORCE)
+set(PNG_INSTALL OFF CACHE BOOL "" FORCE)
+set(PNG_SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
+set(SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
+set(PNG_ZLIB_VERSION "internal" CACHE STRING "" FORCE)
+set(ZLIB_ROOT "${zlib_SOURCE_DIR}" CACHE PATH "" FORCE)
+set(ZLIB_LIBRARY zlib CACHE FILEPATH "" FORCE)
+set(ZLIB_INCLUDE_DIR ${zlib_SOURCE_DIR} CACHE PATH "" FORCE)
+set(ZLIB_BUILD_TESTING OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(
     libpng
     GIT_REPOSITORY https://github.com/glennrp/libpng.git
@@ -113,4 +140,5 @@ target_link_libraries(common
         SDL2_image::SDL2_image-static
         SDL2_ttf::SDL2_ttf-static
         png_static
+        zlibstatic
 )
