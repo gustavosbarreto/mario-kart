@@ -29,7 +29,7 @@ sudo apt install libsdl2-dev libsdl2-ttf-dev
 
 # Build
 
-The project uses SDL2 and SDL2_ttf libraries. A compatibility layer (`Common/allegro.h` and `Common/allegro.cpp`) provides the Allegro 4 API on top of SDL2, allowing the game code to remain mostly unchanged.
+The project uses SDL2 and SDL2_ttf libraries. A compatibility layer (`src/common/allegro.h` and `src/common/allegro.cpp`) provides the Allegro 4 API on top of SDL2, allowing the game code to remain mostly unchanged.
 
 # Run
 
