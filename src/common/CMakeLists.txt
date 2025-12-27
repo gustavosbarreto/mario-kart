@@ -24,6 +24,9 @@ if(TARGET zlibstatic AND NOT TARGET ZLIB::ZLIB)
     add_library(ZLIB::ZLIB ALIAS zlibstatic)
 endif()
 
+# Ensure libpng sees the correct zlib include dirs
+get_target_property(ZLIB_INCLUDE_DIRS zlibstatic INTERFACE_INCLUDE_DIRECTORIES)
+
 # ------------------------------------------------------------------------------
 # libpng (vendored)
 # ------------------------------------------------------------------------------
@@ -34,10 +37,13 @@ set(PNG_TESTS OFF CACHE BOOL "" FORCE)
 set(PNG_INSTALL OFF CACHE BOOL "" FORCE)
 set(PNG_SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
 set(SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
-set(PNG_ZLIB_VERSION "internal" CACHE STRING "" FORCE)
+set(PNG_ZLIB_VERSION "external" CACHE STRING "" FORCE)
 set(ZLIB_ROOT "${zlib_SOURCE_DIR}" CACHE PATH "" FORCE)
-set(ZLIB_LIBRARY zlib CACHE FILEPATH "" FORCE)
-set(ZLIB_INCLUDE_DIR ${zlib_SOURCE_DIR} CACHE PATH "" FORCE)
+# Hint FindZLIB to use our built target
+set(ZLIB_LIBRARY zlibstatic CACHE FILEPATH "" FORCE)
+set(ZLIB_INCLUDE_DIR "${zlib_SOURCE_DIR}" CACHE PATH "" FORCE)
+# Use prebuilt configuration header to avoid zlib version mismatches
+set(PNG_LIBCONF_HEADER "${CMAKE_BINARY_DIR}/_deps/libpng-src/scripts/pnglibconf.h.prebuilt" CACHE FILEPATH "" FORCE)
 set(ZLIB_BUILD_TESTING OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(
     libpng
