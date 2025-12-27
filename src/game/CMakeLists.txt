@@ -27,7 +27,4 @@ target_link_directories(game
 target_link_libraries(game
     PRIVATE
         common
-        ${SDL2_LIBRARIES}
-        ${SDL2_TTF_LIBRARIES}
-        ${SDL2_IMAGE_LIBRARIES}
 )

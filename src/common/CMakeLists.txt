@@ -41,9 +41,21 @@ target_link_directories(common
         ${SDL2_IMAGE_LIBRARY_DIRS}
 )
 
-target_link_libraries(common
-    PRIVATE
-        ${SDL2_LIBRARIES}
-        ${SDL2_TTF_LIBRARIES}
-        ${SDL2_IMAGE_LIBRARIES}
-)
+# Link SDL2 libraries - PUBLIC so executables inherit dependencies
+if(PkgConfig_FOUND)
+  target_link_libraries(common
+      PUBLIC
+          ${SDL2_LIBRARIES}
+          ${SDL2_TTF_LIBRARIES}
+          ${SDL2_IMAGE_LIBRARIES}
+  )
+else()
+  # Windows/vcpkg: use target names
+  target_link_libraries(common
+      PUBLIC
+          SDL2::SDL2
+          SDL2::SDL2main
+          SDL2_ttf::SDL2_ttf
+          SDL2_image::SDL2_image
+  )
+endif()
