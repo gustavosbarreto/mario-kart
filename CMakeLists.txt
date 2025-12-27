@@ -74,12 +74,17 @@ if(WIN32)
                 "${CMAKE_PREFIX_PATH}/bin"
         )
         foreach(_file ${_r_deps})
-            file(INSTALL
-                DESTINATION "${CMAKE_INSTALL_PREFIX}"
-                TYPE SHARED_LIBRARY
-                FOLLOW_SYMLINK_CHAIN
-                FILES "${_file}"
-            )
+            get_filename_component(_filename "${_file}" NAME_WE)
+            get_filename_component(_fullname "${_file}" NAME)
+            # Only copy SDL2 and its direct dependencies (libpng, zlib, freetype)
+            if(_filename MATCHES "^SDL2" OR _filename MATCHES "^(libpng|zlib|freetype)")
+                file(INSTALL
+                    DESTINATION "${CMAKE_INSTALL_PREFIX}"
+                    TYPE SHARED_LIBRARY
+                    FOLLOW_SYMLINK_CHAIN
+                    FILES "${_file}"
+                )
+            endif()
         endforeach()
     ]])
 endif()
