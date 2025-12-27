@@ -34,11 +34,11 @@ jobs:
         shell: bash
         if: runner.os != 'Windows'
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
       - name: Build
         run: |
-          cmake --build build --config Release --parallel -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+          cmake --build build --config Release --parallel
 
       - name: Install (Linux/macOS)
         if: runner.os != 'Windows'
