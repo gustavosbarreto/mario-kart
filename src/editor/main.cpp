@@ -5,7 +5,7 @@
 #include "allegro.h"
 #include <iostream>
 
-int main() {
+int main(int argc, char* argv[]) {
   AllegroSystem *allegro = AllegroSystem::Instance();
   allegro->setupScreen(ObjectSize(640, 480));
   allegro->initializeTimers();
