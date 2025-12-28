@@ -1,4 +1,5 @@
 [![release](https://github.com/humbertodias/mario-kart/actions/workflows/release.yml/badge.svg)](https://github.com/humbertodias/mario-kart/actions/workflows/release.yml)
+![GitHub all releases](https://img.shields.io/github/downloads/humbertodias/mario-kart/total)
 
 Mario Kart Clone
 ================
@@ -20,11 +21,19 @@ Run
 Game
 
 ```shell
-make run-game
+make run/game
 ```
 
 Track Editor
 
 ```shell
-make run-editor
+make run/editor
 ```
+
+
+References
+-------------
+
+- [Sprites](https://www.spriters-resource.com/snes/smariokart/)
+- [Music](https://downloads.khinsider.com/game-soundtracks/album/super-mario-kart-gamerip)
+- [Sound effects](https://www.superluigibros.com/super-mario-kart-sound-effects-wav)

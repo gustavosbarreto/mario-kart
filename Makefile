@@ -12,10 +12,10 @@ clean:
 	@if [ -d build ]; then cmake --build build --target clean || true; fi
 	rm -rf build
 
-run-game: build
+run/game: build
 	cmake --build build --target run-game || ./build/game
 
-run-editor: build
+run/editor: build
 	cmake --build build --target run-editor || ./build/editor
 
 install-formatter:

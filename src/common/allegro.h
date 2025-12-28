@@ -10,6 +10,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 
 // Type definitions
 typedef SDL_Surface BITMAP;
@@ -25,6 +26,7 @@ extern const Uint8 *_sdl_keyboard_state;
 #define KEY_DOWN SDL_SCANCODE_DOWN
 #define KEY_LEFT SDL_SCANCODE_LEFT
 #define KEY_RIGHT SDL_SCANCODE_RIGHT
+#define KEY_SPACE SDL_SCANCODE_SPACE
 
 // key[] array emulation - access SDL keyboard state
 #define key _sdl_keyboard_state
@@ -72,6 +74,10 @@ Uint32 makecol(int r, int g, int b);
 // Text functions
 void textprintf_ex(BITMAP *bmp, TTF_Font *f, int x, int y, Uint32 color,
                    int bg, const char *format, ...);
+
+// Audio helpers
+bool load_music(const char *path);
+bool load_sound(const char *path);  // Load and play WAV/sound effect
 
 // Timing functions
 void rest(int time);
