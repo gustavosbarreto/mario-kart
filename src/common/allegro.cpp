@@ -281,12 +281,7 @@ BITMAP *load_bitmap(const char *filename, void *pal) {
   // Decide transparency method: if image has an alpha channel, use blending;
   // otherwise apply classic magenta colorkey transparency.
   const bool has_alpha = (loaded->format->Amask != 0);
-  if (!has_alpha) {
-    Uint32 magenta = SDL_MapRGB(loaded->format, 255, 0, 255);
-    SDL_SetColorKey(loaded, SDL_TRUE, magenta);
-  } else {
-    SDL_SetSurfaceBlendMode(loaded, SDL_BLENDMODE_BLEND);
-  }
+  SDL_SetSurfaceBlendMode(loaded, SDL_BLENDMODE_BLEND);
 
   // Convert to a standard ARGB8888 surface while preserving alpha/colorkey
   SDL_Surface *converted = SDL_ConvertSurfaceFormat(loaded, SDL_PIXELFORMAT_ARGB8888, 0);
@@ -298,11 +293,7 @@ BITMAP *load_bitmap(const char *filename, void *pal) {
   // Ensure blend mode is set for alpha surfaces
   if (has_alpha) {
     SDL_SetSurfaceBlendMode(converted, SDL_BLENDMODE_BLEND);
-  } else {
-    // Reapply colorkey on converted surface if used
-    Uint32 magenta_conv = SDL_MapRGB(converted->format, 255, 0, 255);
-    SDL_SetColorKey(converted, SDL_TRUE, magenta_conv);
-  }
+  } 
 
   return converted;
 }
